@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h> 
 #include "leitor.h"
-
+#include "simulador.h"
 
 int main(int argc, char *argv[]) {
     
@@ -15,8 +16,22 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    ler_entrada(argc, argv);
+    int total_tarefas;
+    int tempo_total;
 
+    Tarefa * tarefas = (Tarefa*)malloc(sizeof(Tarefa));
+
+    int resultado_entrada = ler_entrada(argc, argv,&total_tarefas,&tempo_total,&tarefas);
+    if(resultado_entrada == 1){
+        return 1;
+    }
+
+    printf("Tarefas Cadastradas com sucesso: \n");
+    for(int i = 0; i < total_tarefas; i++){
+        printf("[%s] %d %d %d\n",tarefas[i].nome, tarefas[i].periodo, tarefas[i].deadline, tarefas[i].burst);
+    }
+
+    free(tarefas);
     
     return 0;
 }

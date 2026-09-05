@@ -1,0 +1,24 @@
+Script started on 2026-09-05 20:47:29-03:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="178" LINES="16"]
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ export TERM=xterm-256color[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K./schedule [Kr rate voo.txt
+[?2004l
+Segmentation fault (core dumped)
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-09-05 20:47:49-03:00 [COMMAND_EXIT_CODE="139"]
+
+Script started on 2026-09-05 20:52:10-03:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="178" LINES="16"]
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ date
+[?2004l
+Sat Sep  5 20:52:13 -03 2026
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ dateexit./scheduler rate voo.txtexport TERM=xterm-256color[2P./scheduler rate voo.txt
+[?2004l
+Tarefas Cadastradas com sucesso: 
+[ATT] 20 12 8
+[NAV] 50 30 15
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-09-05 20:52:19-03:00 [COMMAND_EXIT_CODE="0"]
