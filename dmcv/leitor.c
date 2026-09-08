@@ -15,7 +15,14 @@ int ler_entrada(int argc, char *argv[], int * total_tarefas, int * tempo_total, 
     int resultado_leitura = fscanf(entrada, "%d", tempo_total);
     if(resultado_leitura < 1){
         fprintf(stderr,"Erro: valor não númerico passado");
+        fclose(entrada);
         return 1;
+    }
+
+    if(*tempo_total <= 0){                                    // <-- ADICIONAR
+        fprintf(stderr, "Erro: tempo total deve ser positivo!\n");
+        fclose(entrada);
+    return 1;
     }
 
     *tarefas = NULL;

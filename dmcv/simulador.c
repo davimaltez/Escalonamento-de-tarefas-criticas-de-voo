@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "simulador.h"
 
-void verificar_deadlines_vencidas(Tarefa ** tarefas, int total_tarefas, int t_atual){
+void verificar_deadlines_vencidas(Tarefa ** tarefas, int total_tarefas, int t_atual, FILE * saida){
 
     for(int i = 0; i < total_tarefas; i++){
 
@@ -14,7 +14,7 @@ void verificar_deadlines_vencidas(Tarefa ** tarefas, int total_tarefas, int t_at
                 (*tarefas)[i].perdidas++;
                 (*tarefas)[i].ativa = false;
 
-                printf("[%s] for %d units - L\n",(*tarefas)[i].nome, (*tarefas)[i].restante_ultima_exec - (*tarefas)[i].restante);
+                fprintf(saida,"[%s] for %d units - L\n",(*tarefas)[i].nome, (*tarefas)[i].restante_ultima_exec - (*tarefas)[i].restante);
                 (*tarefas)[i].restante = 0;
             }
         }
@@ -29,6 +29,7 @@ void verificar_chegadas_novas(Tarefa ** tarefas, int total_tarefas, int t_atual)
             (*tarefas)[i].ativa = true;
             (*tarefas)[i].restante = (*tarefas)[i].burst;
             (*tarefas)[i].deadline_absoluta  = (*tarefas)[i].chegada_atual + (*tarefas)[i].deadline;
+            (*tarefas)[i].restante_ultima_exec = (*tarefas)[i].burst;
         }
     }
     else
@@ -42,16 +43,19 @@ void verificar_chegadas_novas(Tarefa ** tarefas, int total_tarefas, int t_atual)
                 (*tarefas)[i].restante = (*tarefas)[i].burst;
                 (*tarefas)[i].chegada_atual = t_atual;
                 (*tarefas)[i].deadline_absoluta = (*tarefas)[i].chegada_atual + (*tarefas)[i].deadline;
+                (*tarefas)[i].restante_ultima_exec = (*tarefas)[i].burst;
 
             }
         }
     }
 }
 
-int tarefa_a_ser_executada_RM(Tarefa ** tarefas, int total_tarefas){
+int tarefa_a_ser_executada(Tarefa ** tarefas, int total_tarefas,int algoritmo){
 
     int indice_maior_prioridade = 0;
     int periodo_maior_prioridade = 9999;
+
+    int menor_deadline_absoluto = 99999;
     bool tem_ativa = false;
 
     for(int i = 0; i < total_tarefas; i++){
@@ -60,9 +64,19 @@ int tarefa_a_ser_executada_RM(Tarefa ** tarefas, int total_tarefas){
 
             tem_ativa = true;
 
-            if((*tarefas)[i].periodo < periodo_maior_prioridade){
-                indice_maior_prioridade = i;
-                periodo_maior_prioridade = (*tarefas)[i].periodo;
+            if(algoritmo == 0){
+                
+                if((*tarefas)[i].periodo < periodo_maior_prioridade){
+                    indice_maior_prioridade = i;
+                    periodo_maior_prioridade = (*tarefas)[i].periodo;
+                }
+            }
+            else
+            {
+                if((*tarefas)[i].deadline_absoluta < menor_deadline_absoluto){
+                    indice_maior_prioridade = i;
+                    menor_deadline_absoluto = (*tarefas)[i].deadline_absoluta;
+                }
             }
         }
     }
@@ -74,13 +88,33 @@ int tarefa_a_ser_executada_RM(Tarefa ** tarefas, int total_tarefas){
     return indice_maior_prioridade;
 }
 
-void RM(Tarefa ** tarefas, int total_tarefas, int tempo_total){
+//0 - RM
+//1 - EDF
 
-    FILE * saida_RM = fopen("rate_dmcv.out","w");
+void simular(Tarefa ** tarefas, int total_tarefas, int tempo_total, int algoritmo){
 
-    if(saida_RM == NULL){
-        fprintf(stderr, "Falha ao abrir o arquivo de saída\n");
-        return NULL;
+    FILE * saida;
+
+    if(algoritmo == 0){
+        
+        saida = fopen("rate_dmcv.out","w");
+    
+        if(saida == NULL){
+            fprintf(stderr, "Falha ao abrir o arquivo de saída\n");
+            return;
+        }
+
+        fprintf(saida, "EXECUTION BY RATE\n");
+    }
+    else{
+
+        saida = fopen("edf_dmcv.out","w");
+    
+        if(saida == NULL){
+            fprintf(stderr, "Falha ao abrir o arquivo de saída\n");
+            return;
+        }
+        fprintf(saida, "EXECUTION BY EDF\n");
     }
     
     int contador_idle = 0;
@@ -89,11 +123,11 @@ void RM(Tarefa ** tarefas, int total_tarefas, int tempo_total){
 
     for(int i = 0; i < tempo_total; i++){
 
-        verificar_deadlines_vencidas(tarefas,total_tarefas,i);
+        verificar_deadlines_vencidas(tarefas,total_tarefas,i,saida);
 
         verificar_chegadas_novas(tarefas,total_tarefas,i);
 
-        int indice_tarefa_atual = tarefa_a_ser_executada_RM(tarefas, total_tarefas);
+        int indice_tarefa_atual = tarefa_a_ser_executada(tarefas, total_tarefas,algoritmo);
 
         if(i == 0){
             indice_ultima_tarefa = indice_tarefa_atual;
@@ -106,90 +140,69 @@ void RM(Tarefa ** tarefas, int total_tarefas, int tempo_total){
 
         } 
         
-        else{
-            
-            if(contador_idle > 0){
-                printf("idle for %d units\n",contador_idle);
-                contador_idle = 0;
-            }
-            //Completou uma execução
-            if((*tarefas)[indice_tarefa_atual].restante == 0){
-    
-                (*tarefas)[indice_tarefa_atual].ativa = false;
-                (*tarefas)[indice_tarefa_atual].concluida++;
-
-
-                //Não teve troca de tarefa, e a tarefa conseguiu completar seu burst
-                if((*tarefas)[indice_tarefa_atual].restante_ultima_exec == 0){
-                    
-                    printf("[%s] for %d units - F\n",(*tarefas)[indice_tarefa_atual].nome, (*tarefas)[indice_tarefa_atual].burst);
-                }
-                
-                else{
-
-                    printf("[%s] for %d units - F\n",(*tarefas)[indice_tarefa_atual].nome, (*tarefas)[indice_tarefa_atual].restante_ultima_exec);
-                }
-
-                indice_tarefa_atual = tarefa_a_ser_executada_RM(tarefas, total_tarefas);
-
-                
-                if(indice_tarefa_atual == -1){
-                    contador_idle++;
-                    indice_ultima_tarefa = -1;
-                    continue;
-                }
-                
-                //Só altero a chegada atual se a tarefa ainda não tinha execução pendente
-                if((*tarefas)[indice_tarefa_atual].restante == 0){
-
-                    (*tarefas)[indice_tarefa_atual].chegada_atual = i;
-            
-                }
-                
-                
-            }
-    
-            //Última tarefa teve que parar
-            else if(indice_ultima_tarefa != -1 && indice_ultima_tarefa != indice_tarefa_atual && (*tarefas)[indice_ultima_tarefa].restante > 0){
-    
-                printf("[%s] for %d units - H\n",(*tarefas)[indice_ultima_tarefa].nome, (*tarefas)[indice_ultima_tarefa].burst - (*tarefas)[indice_ultima_tarefa].restante);
-                
-                (*tarefas)[indice_ultima_tarefa].restante_ultima_exec = (*tarefas)[indice_ultima_tarefa].restante;
-            }
-            
-            (*tarefas)[indice_tarefa_atual].restante--; 
-            indice_ultima_tarefa = indice_tarefa_atual;
+    else{
+        if(contador_idle > 0){
+            fprintf(saida,"idle for %d units\n",contador_idle);
+            contador_idle = 0;
         }
 
-        if(i == tempo_total - 1){
+        // detecta preempção ANTES de decrementar (compara com quem rodou no tick anterior)
+        if(indice_ultima_tarefa != -1 && indice_ultima_tarefa != indice_tarefa_atual
+        && (*tarefas)[indice_ultima_tarefa].restante > 0){
+
+            fprintf(saida,"[%s] for %d units - H\n",
+                (*tarefas)[indice_ultima_tarefa].nome,
+                (*tarefas)[indice_ultima_tarefa].restante_ultima_exec - (*tarefas)[indice_ultima_tarefa].restante);
+
+            (*tarefas)[indice_ultima_tarefa].restante_ultima_exec = (*tarefas)[indice_ultima_tarefa].restante;
+        }
+
+        (*tarefas)[indice_tarefa_atual].restante--;
+
+        // conclusao detectada NO MESMO tick do decremento final, nao no proximo
+        if((*tarefas)[indice_tarefa_atual].restante == 0){
+            (*tarefas)[indice_tarefa_atual].ativa = false;
+            (*tarefas)[indice_tarefa_atual].concluida++;
+
+            fprintf(saida,"[%s] for %d units - F\n",
+                (*tarefas)[indice_tarefa_atual].nome,
+                (*tarefas)[indice_tarefa_atual].restante_ultima_exec);
+        }
+
+        indice_ultima_tarefa = indice_tarefa_atual;
+    }
+
+    if(i == tempo_total - 1){
             //Caso termine em idle
             if(contador_idle > 0){
-                printf("idle for %d units\n",contador_idle);
+                fprintf(saida,"idle for %d units\n",contador_idle);
             }
         }
 
         
     }
 
-    printf("\nLOST DEADLINES\n");
+    fprintf(saida,"\nLOST DEADLINES\n");
     for(int i = 0; i < total_tarefas; i++){
-        printf("[%s] %d\n",(*tarefas)[i].nome,(*tarefas)[i].perdidas);
+        fprintf(saida,"[%s] %d\n",(*tarefas)[i].nome,(*tarefas)[i].perdidas);
     }
-    printf("\nCOMPLETE EXECUTION\n");
+    fprintf(saida,"\nCOMPLETE EXECUTION\n");
     for(int i = 0; i < total_tarefas; i++){
-        printf("[%s] %d\n",(*tarefas)[i].nome,(*tarefas)[i].concluida);
+        fprintf(saida,"[%s] %d\n",(*tarefas)[i].nome,(*tarefas)[i].concluida);
     }
 
-    printf("\nKILLED\n");
+    fprintf(saida,"\nKILLED\n");
     //Verificar se não tem nenhuma tarefa ativa, pois caso esteja ela vai pra Killed
     for(int j = 0; j < total_tarefas; j++){
 
         if((*tarefas)[j].ativa == true){
-            printf("[%s] 1\n",(*tarefas)[j].nome);
+            fprintf(saida,"[%s] 1\n",(*tarefas)[j].nome);
         }
         else{
-            printf("[%s] 0\n",(*tarefas)[j].nome);
+            fprintf(saida,"[%s] 0\n",(*tarefas)[j].nome);
         }
     }
+
+    fclose(saida);
 
 }

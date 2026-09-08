@@ -1,0 +1,26 @@
+EXECUTION BY RATE
+[A] for 4 units - F
+[B] for 1 units - L
+idle for 5 units
+[A] for 4 units - F
+idle for 6 units
+[A] for 4 units - F
+idle for 1 units
+[B] for 4 units - F
+idle for 1 units
+[A] for 4 units - F
+idle for 6 units
+[A] for 4 units - F
+idle for 6 units
+
+LOST DEADLINES
+[A] 0
+[B] 1
+
+COMPLETE EXECUTION
+[A] 5
+[B] 1
+
+KILLED
+[A] 0
+[B] 0
