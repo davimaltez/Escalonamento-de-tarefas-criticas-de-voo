@@ -22,3 +22,110 @@ Tarefas Cadastradas com sucesso:
 exit
 
 Script done on 2026-09-05 20:52:19-03:00 [COMMAND_EXIT_CODE="0"]
+
+
+Script started on 2026-09-06 22:08:24-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="178" LINES="16"]
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ date
+[?2004l
+Sun Sep  6 22:08:25 -03 2026
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ make
+[?2004l
+gcc -c main.c
+In file included from [01m[Ksimulador.h:6[m[K,
+                 from [01m[Kmain.c:5[m[K:
+[01m[Kdados_tarefas.h:16:3:[m[K [01;31m[Kerror: [m[Kconflicting types for ‘[01m[KTarefa[m[K’; have ‘[01m[Kstruct <anonymous>[m[K’
+   16 | } [01;31m[KTarefa[m[K;
+      |   [01;31m[K^~~~~~[m[K
+In file included from [01m[Kleitor.h:6[m[K,
+                 from [01m[Kmain.c:4[m[K:
+[01m[Kdados_tarefas.h:16:3:[m[K [01;36m[Knote: [m[Kprevious declaration of ‘[01m[KTarefa[m[K’ with type ‘[01m[KTarefa[m[K’
+   16 | } [01;36m[KTarefa[m[K;
+      |   [01;36m[K^~~~~~[m[K
+[01m[Kmain.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Kmain.c:24:80:[m[K [01;35m[Kwarning: [m[Kpassing argument 5 of ‘[01m[Kler_entrada[m[K’ from incompatible pointer type [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wincompatible-pointer-types-Wincompatible-pointer-types]8;;[m[K]
+   24 |     int resultado_entrada = ler_entrada(argc, argv,&total_tarefas,&tempo_total,[01;35m[K&tarefas[m[K);
+      |                                                                                [01;35m[K^~~~~~~~[m[K
+      |                                                                                [01;35m[K|[m[K
+      |                                                                                [01;35m[KTarefa **[m[K
+[01m[Kleitor.h:8:88:[m[K [01;36m[Knote: [m[Kexpected ‘[01m[KTarefa **[m[K’ but argument is of type ‘[01m[KTarefa **[m[K’
+    8 | int ler_entrada(int argc, char *argv[], int *total_tarefas, int *tempo_total, [01;36m[KTarefa **tarefas[m[K);
+      |                                                                               [01;36m[K~~~~~~~~~^~~~~~~[m[K
+make: *** [makefile:5: main.o] Error 1
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-09-06 22:08:31-03:00 [COMMAND_EXIT_CODE="2"]
+
+Script started on 2026-09-07 19:55:27-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="178" LINES="16"]
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ date
+[?2004l
+Mon Sep  7 19:55:29 -03 2026
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ whoami
+[?2004l
+davi
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ whoami[2Pdate./scheduler rate voo.txt
+[?2004l
+Tarefas Cadastradas com sucesso: 
+[ATT] 20 12 8
+[NAV] 50 30 15
+[ATT] for 8 units - F
+[ATT] for 8 units - F
+idle for 10 units
+[ATT] for 8 units - F
+idle for 1 units
+[ATT] for 8 units - F
+[ATT] for 8 units - F
+
+LOST DEADLINES
+[ATT] 0
+[NAV] 2
+
+COMPLETE EXECUTION
+[ATT] 5
+[NAV] 0
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-09-07 19:55:39-03:00 [COMMAND_EXIT_CODE="0"]
+
+Script started on 2026-09-08 09:38:01-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="177" LINES="12"]
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ date
+[?2004l
+Tue Sep  8 09:38:04 -03 2026
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ whoami
+[?2004l
+davi
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ whoami[2Pdate./scheduler rate voo.txt
+[?2004l
+[ATT] for 8 units - F
+[NAV] for 12 units - H
+[ATT] for 8 units - F
+[NAV] for 2 units - L
+idle for 10 units
+[ATT] for 8 units - F
+idle for 2 units
+[NAV] for 10 units - H
+[ATT] for 8 units - F
+[NAV] for 5 units - F
+idle for 7 units
+[ATT] for 8 units - F
+idle for 12 units
+
+LOST DEADLINES
+[ATT] 0
+[NAV] 1
+
+COMPLETE EXECUTION
+[ATT] 5
+[NAV] 1
+
+KILLED
+[ATT] 0
+[NAV] 0
+[?2004h]0;davi@computadordavi: ~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao3/Escalonamento-de-tarefas-criticas-de-voo/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-09-08 09:38:11-03:00 [COMMAND_EXIT_CODE="0"]

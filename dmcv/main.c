@@ -26,10 +26,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("Tarefas Cadastradas com sucesso: \n");
-    for(int i = 0; i < total_tarefas; i++){
-        printf("[%s] %d %d %d\n",tarefas[i].nome, tarefas[i].periodo, tarefas[i].deadline, tarefas[i].burst);
-    }
+    RM(&tarefas,total_tarefas,tempo_total);
 
     free(tarefas);
     

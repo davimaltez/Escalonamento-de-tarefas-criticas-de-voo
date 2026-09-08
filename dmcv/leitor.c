@@ -2,6 +2,7 @@
 #include "leitor.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 int ler_entrada(int argc, char *argv[], int * total_tarefas, int * tempo_total, Tarefa ** tarefas) {
     FILE * entrada = fopen(argv[2], "r");
@@ -52,15 +53,25 @@ int ler_entrada(int argc, char *argv[], int * total_tarefas, int * tempo_total, 
             return 1;
         }
 
-        (*tarefas)[i].chegada_atual = 0;
+        if( (*tarefas)[i].deadline > (*tarefas)[i].periodo || (*tarefas)[i].burst > (*tarefas)[i].deadline){
+            fprintf(stderr, "Erro: valores inválidos para período, deadline ou burst!\n");
+            fclose(entrada);
+            return 1;
+        }
 
-        (*tarefas)[i].restante = (*tarefas)[i].burst;
+        (*tarefas)[i].chegada_atual = 0; //quando a instância da tarefa chegou
+
+        (*tarefas)[i].restante = (*tarefas)[i].burst; //quanto de trabalho ainda falta
 
         (*tarefas)[i].deadline_absoluta = (*tarefas)[i].chegada_atual + (*tarefas)[i].deadline;
 
         (*tarefas)[i].concluida = 0;
 
         (*tarefas)[i].perdidas = 0;
+
+        (*tarefas)[i].ativa = false;
+
+        (*tarefas)[i].restante_ultima_exec = 0;
 
         (*total_tarefas)++;
 
