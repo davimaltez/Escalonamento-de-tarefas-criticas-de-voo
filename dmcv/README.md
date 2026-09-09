@@ -62,16 +62,16 @@ Exemplos:
 
 Formato do arquivo de entrada: 
 
-[TEMPO TOTAL]
+[TEMPO TOTAL]  
 [NOME] [PERÍODO] [DEADLINE] [BURST]
 
 Todos os valores numéricos devem ser inteiros positivos respeitando a regra C <= D <= P(Burst, Deadline, Período)
 
 Exemplo(voo.txt):
 
-100
-ATT 20 12 8
-NAV 50 30 15
+100  
+ATT 20 12 8  
+NAV 50 30 15  
 
 Saída Gerada: 
 
